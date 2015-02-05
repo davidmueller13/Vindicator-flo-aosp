@@ -1,4 +1,5 @@
 CFLAGS_KERNEL	:= -fno-unsafe-math-optimizations -fno-graphite-identity -fno-tree-loop-linear -fno-loop-interchange -fno-loop-strip-mine -fno-loop-block
+CFLAGS_KERNEL   += -fno-graphite -fno-fast-math -fno-strict-aliasing -fno-loop-unroll-and-jam
 
 netfilter-objs := core.o nf_log.o nf_queue.o nf_sockopt.o
 
