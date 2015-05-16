@@ -1,6 +1,7 @@
 #
 # Makefile for some libs needed in the kernel.
 #
+CFLAGS_dynamic_debug.o := -fno-strict-aliasing
 CFLAGS_libcrc32c.o := -fno-strict-aliasing
 CFLAGS_nlattr.o := -fno-strict-aliasing
 CFLAGS_klist.o := -fno-strict-aliasing

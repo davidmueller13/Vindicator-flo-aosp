@@ -1,7 +1,7 @@
 #
 # Makefile for the video capture/playback device drivers.
 #
-
+CFLAGS_v4l2-ioctl.o := -fno-strict-aliasing
 EXTRA_CFLAGS += -Wno-array-bounds
 
 tuner-objs	:=	tuner-core.o

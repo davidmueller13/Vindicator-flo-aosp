@@ -1,7 +1,7 @@
 #
 # Makefile for sensor chip drivers.
 #
-
+CFLAGS_cap1106.o := -fno-strict-aliasing
 obj-$(CONFIG_HWMON)		+= hwmon.o
 obj-$(CONFIG_HWMON_VID)		+= hwmon-vid.o
 

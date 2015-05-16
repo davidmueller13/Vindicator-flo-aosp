@@ -1,3 +1,4 @@
+CFLAGS_vidc.o := -fno-strict-aliasing
 ifdef CONFIG_MSM_VIDC_720P
 EXTRA_CFLAGS += -Idrivers/video/msm/vidc/720p/ddl
 EXTRA_CFLAGS += -Idrivers/video/msm/vidc/720p/resource_tracker

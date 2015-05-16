@@ -1,6 +1,10 @@
+EXTRA_CFLAGS += -fno-strict-aliasing
+CFLAGS_ipc_router_smd_xprt.o := -fno-strict-aliasing
+CFLAGS_hsic_tty.o := -fno-strict-aliasing
 CFLAGS_scm.o :=$(call as-instr,.arch_extension sec,-DREQUIRES_SEC=1)
 CFLAGS_rpm_log.o := -fno-strict-aliasing
-
+CFLAGS_bam_dmux.o := -fno-strict-aliasing
+CFLAGS_ipc_router.o := -fno-strict-aliasing
 obj-y += io.o dma.o memory.o
 ifndef CONFIG_ARM_ARCH_TIMER
 obj-y += timer.o
