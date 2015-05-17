@@ -1645,5 +1645,13 @@ static inline unsigned int debug_guardpage_minorder(void) { return 0; }
 static inline bool page_is_guard(struct page *page) { return false; }
 #endif /* CONFIG_DEBUG_PAGEALLOC */
 
+
+
+static inline void page_mapcount_reset(struct page *page)
+{
+	atomic_set(&(page)->_mapcount, -1);
+}
+
+
 #endif /* __KERNEL__ */
 #endif /* _LINUX_MM_H */
