@@ -7,7 +7,6 @@ CFLAGS_KERNEL := -fno-strict-aliasing
 ccflags-y += -Idrivers/misc/
 
 
->>>>>>> 8a1eb65... Initial Commit For Strict Aliasing
 obj-$(CONFIG_MSM_SSBI) += ssbi.o
 obj-$(CONFIG_USB_BAM) += usb_bam.o
 obj-$(CONFIG_SPS) += sps/
