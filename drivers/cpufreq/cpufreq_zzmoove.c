@@ -578,7 +578,6 @@
  * -                                                                                                                                                       -
  * ---------------------------------------------------------------------------------------------------------------------------------------------------------
  */
-
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/init.h>
@@ -1966,7 +1965,7 @@ static inline cputime64_t get_cpu_idle_time_jiffy(unsigned int cpu, cputime64_t 
 
 #if LINUX_VERSION_CODE <= KERNEL_VERSION(3,10,0) /* function has been moved to cpufreq.c in kernel version 3.10 */
 #ifndef CPU_IDLE_TIME_IN_CPUFREQ		 /* overrule for sources with backported cpufreq implementation */
-static inline cputime64_t get_cpu_idle_time(unsigned int cpu, cputime64_t *wall)
+static inline u64 get_cpu_idle_time(unsigned int cpu, u64 *wall)
 {
 	u64 idle_time = get_cpu_idle_time_us(cpu, NULL);
 
@@ -2555,12 +2554,12 @@ static ssize_t store_ignore_nice_load(struct kobject *a, struct attribute *b, co
 		 dbs_info->prev_cpu_idle = get_cpu_idle_time(j,
 #if LINUX_VERSION_CODE <= KERNEL_VERSION(3,10,0)
 #ifdef CPU_IDLE_TIME_IN_CPUFREQ			/* overrule for sources with backported cpufreq implementation */
-		 &dbs_info->prev_cpu_wall, 0);
+		 &dbs_info->prev_cpu_wall);
 #else
 		 &dbs_info->prev_cpu_wall);
 #endif
 #else
-		 &dbs_info->prev_cpu_wall, 0);
+		 &dbs_info->prev_cpu_wall);
 #endif
 		 if (dbs_tuners_ins.ignore_nice)
 		     dbs_info->prev_cpu_nice = kcpustat_cpu(j).cpustat[CPUTIME_NICE];
@@ -2573,12 +2572,12 @@ static ssize_t store_ignore_nice_load(struct kobject *a, struct attribute *b, co
 		dbs_info->prev_cpu_idle = get_cpu_idle_time(j,
 #if LINUX_VERSION_CODE <= KERNEL_VERSION(3,10,0)
 #ifdef CPU_IDLE_TIME_IN_CPUFREQ			/* overrule for sources with backported cpufreq implementation */
-		 &dbs_info->prev_cpu_wall, 0);
+		 &dbs_info->prev_cpu_wall);
 #else
 		 &dbs_info->prev_cpu_wall);
 #endif
 #else
-		 &dbs_info->prev_cpu_wall, 0);
+		 &dbs_info->prev_cpu_wall);
 #endif
 		if (dbs_tuners_ins.ignore_nice)
 		    dbs_info->prev_cpu_nice = kstat_cpu(j).cpustat.nice;
@@ -3844,12 +3843,12 @@ static inline int set_profile(int profile_num)
 		     dbs_info->prev_cpu_idle = get_cpu_idle_time(j,
 #if LINUX_VERSION_CODE <= KERNEL_VERSION(3,10,0)
 #ifdef CPU_IDLE_TIME_IN_CPUFREQ			/* overrule for sources with backported cpufreq implementation */
-		     &dbs_info->prev_cpu_wall, 0);
+		     &dbs_info->prev_cpu_wall);
 #else
 		     &dbs_info->prev_cpu_wall);
 #endif
 #else
-		     &dbs_info->prev_cpu_wall, 0);
+		     &dbs_info->prev_cpu_wall);
 #endif
 		 if (dbs_tuners_ins.ignore_nice)
 		     dbs_info->prev_cpu_nice = kcpustat_cpu(j).cpustat[CPUTIME_NICE];
@@ -3858,15 +3857,15 @@ static inline int set_profile(int profile_num)
 		for_each_online_cpu(j) {
 		    struct cpu_dbs_info_s *dbs_info;
 		    dbs_info = &per_cpu(cs_cpu_dbs_info, j);
-		    dbs_info->prev_cpu_idle = get_cpu_idle_time(j, 
+		    dbs_info->prev_cpu_idle = get_cpu_idle_time(j,
 #if LINUX_VERSION_CODE <= KERNEL_VERSION(3,10,0)
 #ifdef CPU_IDLE_TIME_IN_CPUFREQ			/* overrule for sources with backported cpufreq implementation */
-		     &dbs_info->prev_cpu_wall, 0);
+		     &dbs_info->prev_cpu_wall);
 #else
 		     &dbs_info->prev_cpu_wall);
 #endif
 #else
-		     &dbs_info->prev_cpu_wall, 0);
+		     &dbs_info->prev_cpu_wall);
 #endif
 		if (dbs_tuners_ins.ignore_nice)
 		    dbs_info->prev_cpu_nice = kstat_cpu(j).cpustat.nice;
@@ -4780,12 +4779,12 @@ static void dbs_check_cpu(struct cpu_dbs_info_s *this_dbs_info)
 		cur_idle_time = get_cpu_idle_time(j,
 #if LINUX_VERSION_CODE <= KERNEL_VERSION(3,10,0)
 #ifdef CPU_IDLE_TIME_IN_CPUFREQ			/* overrule for sources with backported cpufreq implementation */
-		     &cur_wall_time, 0);
+		     &cur_wall_time);
 #else
 		     &cur_wall_time);
 #endif
 #else
-		     &cur_wall_time, 0);
+		     &cur_wall_time);
 #endif
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,4,0)
 		wall_time = (unsigned int)
@@ -5615,12 +5614,12 @@ static int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 			j_dbs_info->prev_cpu_idle = get_cpu_idle_time(j,
 #if LINUX_VERSION_CODE <= KERNEL_VERSION(3,10,0)
 #ifdef CPU_IDLE_TIME_IN_CPUFREQ			/* overrule for sources with backported cpufreq implementation */
-			&j_dbs_info->prev_cpu_wall, 0);
+			&j_dbs_info->prev_cpu_wall);
 #else
 			&j_dbs_info->prev_cpu_wall);
 #endif
 #else
-			&j_dbs_info->prev_cpu_wall, 0);
+			&j_dbs_info->prev_cpu_wall);
 #endif
 			if (dbs_tuners_ins.ignore_nice) {
 			    j_dbs_info->prev_cpu_nice =
