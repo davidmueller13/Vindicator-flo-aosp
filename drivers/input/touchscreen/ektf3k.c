@@ -216,8 +216,8 @@ static int shortsweep = 0;
 static int dt2w_switch = 1;
 static int dt2w_switch_temp = 1;
 static int dt2w_changed = 0;
-static int s2w_switch = 15;
-static int s2w_switch_temp = 15;
+static int s2w_switch = 0;
+static int s2w_switch_temp = 0;
 static int s2w_changed = 0;
 static int s2s_switch = 1;
 
@@ -796,7 +796,7 @@ static ssize_t elan_ktf3k_sweep2wake_dump(struct device *dev,
 {
 	sscanf(buf, "%d ", &s2w_switch_temp);
 	if (s2w_switch_temp < 0 || s2w_switch_temp > 15)
-		s2w_switch_temp = 15;
+		s2w_switch_temp = 0;
 
 	if (!scr_suspended)
 		s2w_switch = s2w_switch_temp;
