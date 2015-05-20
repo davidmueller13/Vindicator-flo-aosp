@@ -402,4 +402,3 @@ obj-$(CONFIG_MSM_CPU_PWRCTL) +=  msm_cpu_pwrctl.o
 
 obj-$(CONFIG_LCD_KCAL_STANDALONE) += msm_kcal_ctrl.o
 obj-$(CONFIG_HAS_MACH_MEMUTILS) += memutils/
-obj-$(CONFIG_MSM_HOTPLUG) += msm_hotplug.o

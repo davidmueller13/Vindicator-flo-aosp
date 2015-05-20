@@ -256,7 +256,7 @@ FASTFPE		:=arch/arm/fastfpe
 ifeq ($(FASTFPE),$(wildcard $(FASTFPE)))
 FASTFPE_OBJ	:=$(FASTFPE)/
 endif
-
+core-$(CONFIG_INTELLI_PLUG)	+= arch/arm/hotplug/
 core-$(CONFIG_FPE_NWFPE)	+= arch/arm/nwfpe/
 core-$(CONFIG_FPE_FASTFPE)	+= $(FASTFPE_OBJ)
 core-$(CONFIG_VFP)		+= arch/arm/vfp/
