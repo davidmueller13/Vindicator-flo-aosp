@@ -1236,16 +1236,11 @@ struct task_struct {
 	unsigned int ptrace;
 
 #ifdef CONFIG_SMP
-	struct llist_node wake_entry;
-	int on_cpu;
 	struct task_struct *last_wakee;
 	unsigned long wakee_flips;
 	unsigned long wakee_flip_decay_ts;
 #endif
-	int on_rq;
 
-	int prio, static_prio, normal_prio;
-	unsigned int rt_priority;
 	const struct sched_class *sched_class;
 	struct sched_entity se;
 	struct sched_rt_entity rt;
@@ -1276,9 +1271,11 @@ struct task_struct {
 
 #ifdef CONFIG_SMP
 struct llist_node wake_entry;
-#endif if defined(CONFIG_SMP) || defined(CONFIG_SCHED_BFS)
+#endif
+#if defined(CONFIG_SMP) || defined(CONFIG_SCHED_BFS)
 bool on_cpu;
-#endif ifndef CONFIG_SCHED_BFS
+#endif
+#ifndef CONFIG_SCHED_BFS
 bool on_rq;
 #endif
 int prio, static_prio, normal_prio;
@@ -1291,6 +1288,7 @@ u64 last_ran;
 u64 sched_time; /* sched_clock time spent running */
 #ifdef CONFIG_SMP
 	bool sticky; /* Soft affined flag */
+#endif
 #endif
 unsigned long rt_timeout;
 #else /* CONFIG_SCHED_BFS */
@@ -2835,11 +2833,10 @@ static inline void set_task_cpu(struct task_struct *p, int cpu)
 
 #endif /* CONFIG_SMP */
 
-extern struct atomic_notifier_head migration_notifier_head;
 
 extern long sched_setaffinity(pid_t pid, const struct cpumask *new_mask);
 extern long sched_getaffinity(pid_t pid, struct cpumask *mask);
-
+extern struct atomic_notifier_head migration_notifier_head;
 extern void normalize_rt_tasks(void);
 
 #ifdef CONFIG_CGROUP_SCHED
@@ -2946,25 +2943,4 @@ static inline unsigned long rlimit_max(unsigned int limit)
 
 #endif /* __KERNEL__ */
 
-#endif
 
-
-#ifdef CONFIG_SMP
-struct llist_node wake_entry;
-#endif if defined(CONFIG_SMP) || defined(CONFIG_SCHED_BFS)
-bool on_cpu;
-#endif ifndef CONFIG_SCHED_BFS
-bool on_rq;
-#endif
-int prio, static_prio, normal_prio; unsigned int rt_priority;
-#ifdef CONFIG_SCHED_BFS
-int time_slice; u64 deadline; struct list_head run_list; u64 last_ran; 
-u64 sched_time; /* sched_clock time spent running */
-#ifdef CONFIG_SMP
-	bool sticky; /* Soft affined flag */
-#endif
-unsigned long rt_timeout;
-#else /* CONFIG_SCHED_BFS */
-const struct sched_class *sched_class; struct sched_entity se;
-struct sched_rt_entity rt;
-#endif

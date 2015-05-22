@@ -10,7 +10,7 @@ ifneq ($(CONFIG_SCHED_OMIT_FRAME_POINTER),y)
 # to get a correct value for the wait-channel (WCHAN in ps). --davidm
 CFLAGS_core.o := $(PROFILING) -fno-omit-frame-pointer -fno-strict-aliasing
 endif
-
+obj-y += completion.o
 ifdef CONFIG_SCHED_BFS
 obj-y += bfs.o clock.o
 else
