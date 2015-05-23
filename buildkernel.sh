@@ -10,7 +10,7 @@ export CM_CHECK=`grep -c "case MDP_YCBYCR_H2V1:" drivers/video/msm/mdp4_overlay.
 #fi
 make ARCH=arm CROSS_COMPILE=${cross} -j32 vindicator_defconfig
 make ARCH=arm CROSS_COMPILE=${cross} -j32
-cp arch/arm/boot/Image zip/kernel/zImage
+cp arch/arm/boot/zImage zip/kernel/zImage
 find -name '*.ko' -exec cp -av {} zip/system/lib/modules/ \;
 cd zip
 zip -q -r Vindicator-N7-${version}-${2}.zip META-INF kernel data system
